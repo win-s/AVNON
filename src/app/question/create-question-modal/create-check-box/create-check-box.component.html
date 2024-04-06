@@ -1,0 +1,31 @@
+<form [formGroup]="form">
+    <ng-container formArrayName="options">
+        @for(option of $any(form.get('options'))?.controls;let i = $index;track i){
+            <div class='item'>
+                <mat-form-field [style.width.%]="100">
+                    <mat-label>Add Answer Option</mat-label>
+                    <input matInput formControlName="{{i}}">
+                    @if (option?.hasError('required')) {
+                        <mat-error> <strong>required</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        }
+    </ng-container>
+    @if($any(form.get('options'))?.controls.length < 5){
+        <div class="item">
+            <a
+                class="link-button"
+                target="_self"
+                class="mat-body link-button"
+                (click)="onAddCheckBox($event)">
+                    + Add another answer
+            </a>
+        </div>
+    }
+
+    <mat-checkbox formControlName="other">
+        Allow user to specify their own answer
+    </mat-checkbox>
+    
+</form>

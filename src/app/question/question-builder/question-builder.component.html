@@ -1,0 +1,28 @@
+<div class="container">
+    <form [formGroup]="forms" (ngSubmit)="onSubmit()">
+        @if(questionModelService.updated$ | async; as questions){
+            <div formArrayName="questions">
+                @for ( question of questions; track question.key; let i = $index) {
+                    <app-dynamic-form-question
+                        [form]="$any(forms.get('questions')).at(i)"
+                        [question]="question"
+                    ></app-dynamic-form-question>
+                }
+            </div>
+            
+            <a href="_blank" target="_self" (click)="onOpenModal($event)">Add New Question</a><br>
+            @if(questions.length!==0){
+                <div class="submit-button-contianer">
+                    <button mat-flat-button    
+                    type="submit"
+                    color="primary"
+                    
+                    >Review my answers</button>
+                </div>
+
+            }
+        }
+    
+    </form>
+</div>
+

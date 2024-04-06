@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Add New Questions</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <div class="container">
+            <div class='item'>
+                <button [style.width.%]="100" mat-stroked-button type="button" (click)="onClickShowCheckBox()">Checkbox List V</button>
+            </div>
+            
+            <div class='item'>
+                <mat-form-field [style.width.%]="100">
+                    <mat-label>Type question here</mat-label>
+                    <input matInput formControlName="question">
+                    @if (form.get('question')?.hasError('required')) {
+                        <mat-error> <strong>required</strong></mat-error>
+                    }
+                </mat-form-field>
+            </div>
+    
+            @if(controlType === ControlType.CheckBox){
+                <app-create-check-box
+                    [form]="form"
+                ></app-create-check-box>
+            }
+    
+            <mat-checkbox formControlName="required">
+                This field is required
+            </mat-checkbox>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="buttons-container">
+            <button mat-stroked-button (click)="onCancel()" type="button">Cancle</button>
+            <button mat-flat-button type="submit">Submit</button>
+        </div>
+    </mat-dialog-actions>
+</form>

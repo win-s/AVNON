@@ -1,0 +1,78 @@
+<div class="container">
+    <form [formGroup]="form">
+        <mat-card>
+            <mat-card-header>
+                <h2>{{label}}</h2>
+            </mat-card-header>
+            
+            <mat-card-content>
+                
+                @switch (question.controlType) {
+                    @case( ControlType.TextBox ){
+                        <mat-form-field class="answer-input" [style.width.%]="100">
+                            <input matInput formControlName="{{question.key}}">
+                            @if (form.get(question.key)?.hasError('required')) {
+                                <mat-error> <strong>required</strong></mat-error>
+                            }
+                        </mat-form-field>
+                    }
+                    @case( ControlType.CheckBox ){
+                        <ul formArrayName="{{question.key}}" class="checkbox-list">
+                            @for( option of $any(question).options; track option.key;let i=$index){
+                                @if(option.key === OtherKey){
+                                    <li>
+                                        <mat-checkbox formControlName="{{i}}">
+                                            {{option.label}}
+                                        </mat-checkbox>
+                                        @if($any(form.get(question.key)).at(i)?.value && form.get(OtherLabelKey)){
+                                            <mat-form-field 
+                                                appearance="outline" 
+                                                [style.margin-left.px]="20">
+                                                <input matInput [formControl]="$any(form!.get(OtherLabelKey))">
+                                                @if (form.get(OtherLabelKey)?.hasError('required')) {
+                                                    <mat-error> <strong>required</strong></mat-error>
+                                                }
+                                            </mat-form-field>
+                                        }
+            
+                                    </li>
+                                }@else {
+                                    <li>
+                                        <mat-checkbox formControlName="{{i}}">
+                                            {{option.label}}
+                                        </mat-checkbox>
+                                    </li>
+                                }
+
+                            }
+                            <!-- @if($any(question).other){
+                                <li>
+                                    <mat-checkbox [formControl]="$any(form!.get('other'))">
+                                        Other
+                                    </mat-checkbox>
+                                    @if(form.get('other')?.value && form.get('otherLabel')){
+                                        <mat-form-field 
+                                            appearance="outline" 
+                                            [style.margin-left.px]="20">
+                                            <input matInput [formControl]="$any(form!.get('otherLabel'))">
+                                            @if (form.get('otherLabel')?.hasError('required')) {
+                                                <mat-error> <strong>required</strong></mat-error>
+                                            }
+                                        </mat-form-field>
+                                    }
+        
+                                </li>
+                            } -->
+                        </ul>
+                        @if (form.get(question.key)?.hasError('requireCheckboxToBeChecked') && form.get(question.key)?.touched) {
+                            <mat-error> <strong>required</strong></mat-error>
+                        }
+                    }
+                }
+            </mat-card-content>
+        </mat-card>
+    </form>
+    
+    
+    
+</div>

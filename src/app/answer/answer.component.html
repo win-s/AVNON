@@ -1,0 +1,32 @@
+<div class="container">
+
+    @for(answer of answers; let i=$index;track i;){
+        <div class="card-container">
+            <mat-card>
+                <mat-card-header>
+                    <h2>{{answer.question}}</h2>
+                </mat-card-header>
+                
+                <mat-card-content>
+                    <div class="answer-container">
+                        @switch (answer.controlType) {
+                            @case (controlType.TextBox) {
+                                <p>{{answer.answer}}</p>
+                            }
+                            @case (controlType.CheckBox) {
+                                <ul class="checkbox-list">
+                                    @for(selectedLabel of answer.answer;let i=$index;track i;){
+                                        <li>{{selectedLabel}}</li>
+                                    }
+                                </ul>
+                            }
+                        }
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    }
+    <a href="_blank" target="_self" routerLink="/form/builder">Back to Forms Builder</a>
+</div>
+

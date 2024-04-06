@@ -1,0 +1,15 @@
+.container{
+    margin: 20px;
+    .card-container{
+        margin-bottom: 10px;
+        .answer-container{
+            padding-left:10px;
+            .checkbox-list{
+                list-style: none;
+                padding-left: 0;
+            }
+        }
+
+    }
+
+}
